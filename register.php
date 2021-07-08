@@ -113,17 +113,17 @@ if (isset($_POST['reg_button'])) {
         else if($random == 5)
         $profile_pic = "assets/images/profile_pics/defaults/head_pomegranate.png";
 
-        // echo $fname;
-        // echo $lname;
-        // echo $username;
-        // echo $email;
-        // echo $password;
-        // echo $date;
-        // echo $profile_pic;
-        
 
         $query = mysqli_query($connection, "INSERT INTO users VALUES (NULL, '$fname', '$lname', '$username', '$email', '$password', '$date', '$profile_pic', '0', '0', 'no', ',' )");
-    }
+  $success_message = "<span style='color: #14C800'>You're all set! Go ahead and login!</span><br>";
+        array_push($error_array, $success_message);
+
+        // Clear session variables
+        $_SESSION['reg_fname'] = "";
+        $_SESSION['reg_lname'] = "";
+        $_SESSION['reg_email'] = "";
+        $_SESSION['reg_email2'] = "";
+      }
 }
 
 ?>
@@ -197,6 +197,9 @@ if (isset($_POST['reg_button'])) {
 
 
   <input type="submit"name="reg_button" value="Register" >
+<br>
+  <?php if (in_array($success_message, $error_array)) 
+      echo $success_message;?>
   </form>
 </body>
 </html>
