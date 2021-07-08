@@ -89,6 +89,23 @@ if (isset($_POST['reg_button'])) {
       array_push($error_array,"Your password must be between 5 and 30 characters long<br>" );
     
     }
+
+    // if there are no errors
+    if(empty($error_array)) {
+      $password = md5($password); // Encrypt password before sending to db
+
+      // Generate unsername by concat first name and last name
+      $username = strolower($fname . "_" . $lname); // dot neans "add to a string"
+      $check_username_query = mysqli_query($connection, "SELECT username FROM users WHERE username='$username'");
+
+      $i = 0;
+      // if username exists add number to username
+      while(mysqli_num_rows($check_username_query) != 0) {
+$i++;
+$username = $username . "_" . $i;
+$check_username_query = mysqli_query($con, "SELECT username FROM users WHERE username='$username'");
+      }
+    }
 }
 
 ?>
