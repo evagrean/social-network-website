@@ -29,12 +29,12 @@ if (isset($_POST['reg_button'])) {
 
     $email = strip_tags($_POST['reg_email']);
     $email = str_replace(' ', '', $email);
-    $email = ucfirst(strtolower($email));
+    $email = strtolower($email);
     $_SESSION['reg_email'] = $email;
 
     $email2 = strip_tags($_POST['reg_email2']);
     $email2 = str_replace(' ', '', $email2);
-    $email2 = ucfirst(strtolower($email2));
+    $email2 = strtolower($email2);
     $_SESSION['reg_email2'] = $email2;
 
     $password = strip_tags($_POST['reg_password']);
@@ -89,7 +89,7 @@ if (isset($_POST['reg_button'])) {
         $password = md5($password); // Encrypt password before sending to db
 
         // Generate unsername by concat first name and last name
-      $username = strolower($fname . "_" . $lname); // dot neans "add to a string"
+      $username = strtolower($fname . "_" . $lname); // dot neans "add to a string"
       $check_username_query = mysqli_query($connection, "SELECT username FROM users WHERE username='$username'");
 
         $i = 0;
@@ -97,22 +97,32 @@ if (isset($_POST['reg_button'])) {
         while (mysqli_num_rows($check_username_query) != 0) {
             $i++;
             $username = $username . "_" . $i;
-            $check_username_query = mysqli_query($con, "SELECT username FROM users WHERE username='$username'");
+            $check_username_query = mysqli_query($connection, "SELECT username FROM users WHERE username='$username'");
         }
 
         // Assign a profile picture
         $random = rand(1,5); // Random number between 1 and 5
-        if($random = 1) 
-          $profile_pic = "assets/images/profile_pics/defaults/head_carrot.png";
-        else if($random = 2)
+        if($random == 1) 
+        $profile_pic = "assets/images/profile_pics/defaults/head_carrot.png";
+        else if($random == 2) 
         $profile_pic = "assets/images/profile_pics/defaults/head_deep_blue.png";
-        else if($random = 3)
+        else if($random == 3)
         $profile_pic = "assets/images/profile_pics/defaults/head_emerald.png";
-        else if($random = 4)
+        else if($random == 4)
         $profile_pic = "assets/images/profile_pics/defaults/head_green_sea.png";
-        else if($random = 5)
+        else if($random == 5)
         $profile_pic = "assets/images/profile_pics/defaults/head_pomegranate.png";
 
+        // echo $fname;
+        // echo $lname;
+        // echo $username;
+        // echo $email;
+        // echo $password;
+        // echo $date;
+        // echo $profile_pic;
+        
+
+        $query = mysqli_query($connection, "INSERT INTO users VALUES (NULL, '$fname', '$lname', '$username', '$email', '$password', '$date', '$profile_pic', '0', '0', 'no', ',' )");
     }
 }
 
