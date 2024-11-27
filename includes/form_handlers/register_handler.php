@@ -1,121 +1,145 @@
 <?php
-$fname = "";
-$lname = "";
-$email = "";
-$email2 = "";
-$password = "";
-$password2 = "";
-$date = "";
-$error_array = array();
+// Declaring variables to prevent errors
+$fname="";
+$fname="";
+$email="";
+$email2="";
+$password="";
+$password2="";
+$date=""; // Sign up date
+$error_array= array(); // Holds error messages
 
-if (isset($_POST['reg_button'])) {
-    // strip_tags
-  $fname = strip_tags($_POST['reg_fname']); //removes possible html tags from input
+$fnameMsg = "Your first name must be between 2 and 25 characters long";
+$lnameMsg = "Your last name must be between 2 and 25 characters long";
+$doubleEmailMsg = "Email already in use";
+$invalidEmailMsg = "Invalid Email format";
+$noMatchEmailMsg = "Email does not match";
+$noMatchPasswordMsg = "Your passwords do not match";
+$passwordCharMsg = "Your password can only contain characters or numbers";
+$passwordLengthMsg = "Your password must be between 5 and 30 characters";
+$registerSuccessMsg = "<span style='color: #14CB00;'>You're all set! Go ahead and login!</span><br>";
+$loginFailMsg = "Email or password was incorrect";
+
+
+
+if(isset($_POST['reg_button'])) {
+  // Registration form values
+  $fname = strip_tags($_POST['reg_fname']); // strip_tags removes HTML tags from text
   $fname = str_replace(' ', '', $fname);
-    $fname = ucfirst(strtolower($fname));
-    $_SESSION['reg_fname'] = $fname; // stores first name into session
+  $fname = ucfirst(strtolower($fname)); // captializes first letter
+  $_SESSION['reg_fname'] = $fname;
 
-    $lname = strip_tags($_POST['reg_lname']);
-    $lname = str_replace(' ', '', $lname);
-    $lname = ucfirst(strtolower($lname));
-    $_SESSION['reg_lname'] = $lname;
+  $lname = strip_tags($_POST['reg_lname']); 
+  $lname = str_replace(' ', '', $lname);
+  $lname = ucfirst(strtolower($lname));
+  $_SESSION['reg_lname'] = $lname;
 
-    $email = strip_tags($_POST['reg_email']);
-    $email = str_replace(' ', '', $email);
-    $email = strtolower($email);
-    $_SESSION['reg_email'] = $email;
+  $email = strip_tags($_POST['reg_email']); 
+  $email = str_replace(' ', '', $email);
+  $_SESSION['reg_email'] = $email;
 
-    $email2 = strip_tags($_POST['reg_email2']);
-    $email2 = str_replace(' ', '', $email2);
-    $email2 = strtolower($email2);
-    $_SESSION['reg_email2'] = $email2;
 
-    $password = strip_tags($_POST['reg_password']);
+  $email2 = strip_tags($_POST['reg_email2']); 
+  $email2 = str_replace(' ', '', $email2); 
+  $_SESSION['reg_email2'] = $email2;
 
-    $password2 = strip_tags($_POST['reg_password2']);
-  
-    $date = date("Y-m-d");
-  
-    if ($email == $email2) {
-        // Check if email is in valid format
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+  $password = strip_tags($_POST['reg_password']); 
+  $_SESSION['reg_password'] = $password;
 
-            // Check if email already exists
-            $email_check = mysqli_query($connection, "SELECT email FROM users WHERE email='$email'");
+  $password2 = strip_tags($_POST['reg_password2']); 
+  $_SESSION['reg_password2'] = $password2;
 
-            // Count the number of rows returned
-            $num_rows = mysqli_num_rows($email_check);
+  $date = date("Y-m-d");
 
-            if ($num_rows > 0) {
-                array_push($error_array, "Email aready in use<br>");
-            }
-        } else {
-            array_push($error_array, "Invalid email format<br>");
-        }
+  if($email == $email2) {
+    // check valid format
+    if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+    // Check if email already exists
+    $email_check = mysqli_query($connection, "SELECT email FROM users WHERE email='$email'");
+    // Count numer of rows returned
+  $num_rows = mysqli_num_rows($email_check);
+
+  if($num_rows > 0) {
+    array_push($error_array, $doubleEmailMsg);
+    
+  }
+
     } else {
-        array_push($error_array, "Email adresses don't match<br>");
+      array_push($error_array, $invalidEmailMsg);
+ 
     }
 
-    if (strlen($fname) > 25 || strlen($fname) < 3) {
-        array_push($error_array, "Your first name must be between 3 and 25 characters<br>");
-    }
+  } else {
+    array_push($error_array, $invalidEmailMsg);
+  
+  }
 
-    if (strlen($lname) > 25 || strlen($lname) < 3) {
-        array_push($error_array, "Your last name must be between 3 and 25 characters<br>");
-    }
+  if(strlen($fname) > 25 || strlen($fname) < 2) {
+    array_push($error_array, $fnameMsg);
+    
+  };
 
-    if ($password != $password2) {
-        array_push($error_array, "Your passwords don't match<br>");
-    } else {
-        if (preg_match('/[^A-Za-z0-9]', $password)) {
-            array_push($error_array, "Your password can only english characters and numbers<br>");
-        }
-    }
+  if(strlen($lname) > 25 || strlen($lname) < 2) {
+    array_push($error_array, $lnameMsg);
+    
+  };
 
-    if (strlen($password) > 30 || strlen($password) < 5) {
-        array_push($error_array, "Your password must be between 5 and 30 characters long<br>");
-    }
+  if($password != $password2) {
+    array_push($error_array, $noMatchPasswordMsg);
 
-    // if there are no errors
-    if (empty($error_array)) {
-        $password = md5($password); // Encrypt password before sending to db
+  }  else {
+    if(preg_match('/[^A-Za-z=0-9]/', $password)) {
+      array_push($error_array, $passwordCharMsg);
 
-        // Generate unsername by concat first name and last name
-      $username = strtolower($fname . "_" . $lname); // dot neans "add to a string"
-      $check_username_query = mysqli_query($connection, "SELECT username FROM users WHERE username='$username'");
+    };
+  };
 
-        $i = 0;
-        // if username exists add number to username
-        while (mysqli_num_rows($check_username_query) != 0) {
-            $i++;
-            $username = $username . "_" . $i;
-            $check_username_query = mysqli_query($connection, "SELECT username FROM users WHERE username='$username'");
-        }
+  if(strlen($password) > 30 || strlen($password) < 5) {
+    array_push($error_array, $passwordLengthMsg);
+   
+  }
 
-        // Assign a profile picture
-        $random = rand(1,5); // Random number between 1 and 5
-        if($random == 1) 
-        $profile_pic = "assets/images/profile_pics/defaults/head_carrot.png";
-        else if($random == 2) 
-        $profile_pic = "assets/images/profile_pics/defaults/head_deep_blue.png";
-        else if($random == 3)
-        $profile_pic = "assets/images/profile_pics/defaults/head_emerald.png";
-        else if($random == 4)
-        $profile_pic = "assets/images/profile_pics/defaults/head_green_sea.png";
-        else if($random == 5)
-        $profile_pic = "assets/images/profile_pics/defaults/head_pomegranate.png";
+  if(empty($error_array)) {
+    $password = md5($password);
 
+    // Generate username
+    $username = strtolower($fname . "_" . $lname);
+    $checkUsernameQuery = mysqli_query($connection, "SELECT username from users WHERE username='$username'");
 
-        $query = mysqli_query($connection, "INSERT INTO users VALUES (NULL, '$fname', '$lname', '$username', '$email', '$password', '$date', '$profile_pic', '0', '0', 'no', ',' )");
-  $success_message = "<span style='color: #14C800'>You're all set! Go ahead and login!</span><br>";
-        array_push($error_array, $success_message);
+    $i = 0;
+    while(mysqli_num_rows($checkUsernameQuery) != 0) {
+      $i++;
+      $username = $username . "_" . $i;
+      $checkUsernameQuery = mysqli_query($connection, "SELECT username from users WHERE username='$username'");
+  };
 
-        // Clear session variables
-        $_SESSION['reg_fname'] = "";
-        $_SESSION['reg_lname'] = "";
-        $_SESSION['reg_email'] = "";
-        $_SESSION['reg_email2'] = "";
-      }
-}
+    // Assign a profile picture
+    $random = rand(1,5); // Random number between 1 and 5
+    if($random == 1) 
+    $profilePic = "assets/images/profile_pics/defaults/head_carrot.png";
+    else if($random == 2) 
+    $profilePic = "assets/images/profile_pics/defaults/head_deep_blue.png";
+    else if($random == 3)
+    $profilePic = "assets/images/profile_pics/defaults/head_emerald.png";
+    else if($random == 4)
+    $profilePic = "assets/images/profile_pics/defaults/head_green_sea.png";
+    else if($random == 5)
+    $profilePic = "assets/images/profile_pics/defaults/head_pomegranate.png";
+
+    $query = mysqli_query($connection, "INSERT INTO users VALUES (NULL, '$fname', '$lname', '$username', '$email', '$password', '$date', '$profilePic', '0', '0', 'no', ',' )" );
+    array_push($error_array, $registerSuccessMsg);
+
+    // clear session variables after submission
+
+    $_SESSION['reg_fname'] = "";
+    $_SESSION['reg_lname'] = "";
+    $_SESSION['reg_email'] = "";
+    $_SESSION['reg_email2'] = "";
+    $_SESSION['reg_password'] = "";
+    $_SESSION['reg_password2'] = "";
+ 
+  }
+};
+
 ?>
