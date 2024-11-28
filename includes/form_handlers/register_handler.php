@@ -9,16 +9,16 @@ $password2="";
 $date=""; // Sign up date
 $error_array= array(); // Holds error messages
 
-$fnameMsg = "Your first name must be between 2 and 25 characters long";
-$lnameMsg = "Your last name must be between 2 and 25 characters long";
-$doubleEmailMsg = "Email already in use";
-$invalidEmailMsg = "Invalid Email format";
-$noMatchEmailMsg = "Email does not match";
-$noMatchPasswordMsg = "Your passwords do not match";
-$passwordCharMsg = "Your password can only contain characters or numbers";
-$passwordLengthMsg = "Your password must be between 5 and 30 characters";
+$fnameMsg = "Your first name must be between 2 and 25 characters long<br>";
+$lnameMsg = "Your last name must be between 2 and 25 characters long<br>";
+$doubleEmailMsg = "Email already in use<br>";
+$invalidEmailMsg = "Invalid Email format<br>";
+$noMatchEmailMsg = "Email does not match<br>";
+$noMatchPasswordMsg = "Your passwords do not match<br>";
+$passwordCharMsg = "Your password can only contain characters or numbers<br>";
+$passwordLengthMsg = "Your password must be between 5 and 30 characters<br>";
 $registerSuccessMsg = "<span style='color: #14CB00;'>You're all set! Go ahead and login!</span><br>";
-$loginFailMsg = "Email or password was incorrect";
+$loginFailMsg = "Email or password was incorrect<br>";
 
 
 
