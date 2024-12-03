@@ -36,7 +36,7 @@ body {
   border-bottom: 5px solid #5326d1;
   margin: 0 0 10px 0;
   display: inline-flex;
-  font-family
+  font-family: "Quicksand-Bold", sans-serif;
 }
 
 .logo a {
@@ -52,4 +52,23 @@ body {
 
 a:hover {
   text-decoration: none;
+}
+
+nav {
+  float: right;
+  right: 1px;
+  position: absolute;
+  margin: 10px;
+}
+
+nav a {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+  font-size: 17px;
+  margin: 0 10px 0 10px;
+}
+
+nav a:hover {
+  border-bottom: 7px solid #b07be0;
 }
