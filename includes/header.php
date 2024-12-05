@@ -26,7 +26,7 @@ if(isset($_SESSION['username'])) {
   <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
-  <link rel="stylesheet" type="text/css" href="./assets/CSS/header_styles.css">
+  <link rel="stylesheet" type="text/css" href="./assets/CSS/styles.css">
 </head>
 
 <body>
@@ -37,14 +37,16 @@ if(isset($_SESSION['username'])) {
     </div>
 
     <nav>
-      <a href="#"><?php echo $user['first_name'] ?></i></a>
-      <a href="#"><i class="material-icons">home</i></a>
+      <a href="" <?php echo  $userLoggedIn?>""><?php echo $user['first_name'] ?></i></a>
+      <a href="index.php"><i class="material-icons">home</i></a>
       <a href="#"><i class="material-icons">mail</i></a>
       <a href="#"><i class="material-icons">notifications</i></a>
       <a href="#"><i class="material-icons">group</i></a>
       <a href="#"><i class="material-icons">settings</i></a>
-      <a href="#"><i class="material-icons">logout</i></a>
+      <a href="includes/handlers/logout.php"><i class="material-icons">logout</i></a>
     </nav>
 
 
+
   </div>
+  <div class="wrapper">

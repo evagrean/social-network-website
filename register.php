@@ -140,6 +140,7 @@ if(in_array($registerSuccessMsg, $error_array)) echo $registerSuccessMsg;
 
         </form>
       </div>
+
     </div>
   </div>
 </body>
