@@ -32,6 +32,16 @@ if(isset($_POST['post'])) {
 
 
   </form>
+  <hr>
+
+  <?php 
+  
+  $post = new Post($connection, $userLoggedIn);
+  $post->loadPostsFriends();
+  
+  ?>
+
+
 
 
 

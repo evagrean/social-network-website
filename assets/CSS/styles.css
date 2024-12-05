@@ -1,3 +1,10 @@
+/* Define cutsom properties */
+:root {
+  --primary-color: #5d2be9;
+  --primary-color-darker: #5326d1;
+  --primary-color-lighter: #b07be0;
+}
+
 @font-face {
   font-family: "Quicksand-Regular";
   src: url("../fonts/Quicksand-Regular.otf");
@@ -22,7 +29,7 @@
 * {
   margin: 0;
   padding: 0;
-  border: 1px solid magenta; /* only dev helper */
+  /* border: 1px solid magenta; only dev helper */
 }
 
 body {
@@ -33,8 +40,8 @@ body {
 .top-bar {
   width: 100%;
   height: 40px;
-  background-color: #5d2be9;
-  border-bottom: 5px solid #5326d1;
+  background-color: var(--primary-color);
+  border-bottom: 5px solid var(--primary-color-darker);
   margin: 0 0 10px 0;
   display: inline-flex;
   font-family: "Quicksand-Bold", sans-serif;
@@ -50,7 +57,7 @@ body {
   top: 9px;
   text-decoration: none;
   color: #12082e;
-  text-shadow: #b07be0 0.5px 0.5px 0px;
+  text-shadow:var(--primary-color-lighter); 0.5px 0.5px 0px;
 }
 
 a:hover {
@@ -73,7 +80,7 @@ nav a {
 }
 
 nav a:hover {
-  border-bottom: 7px solid #b07be0;
+  border-bottom: 7px solid var(--primary-color-lighter);;
 }
 
 .wrapper {
@@ -109,7 +116,7 @@ nav a:hover {
 
 .user_details_left_right a {
   text-decoration: none;
-  color: #5d2be9;
+  color: var(--primary-color);
 }
 
 .user_details img {
@@ -146,7 +153,7 @@ textarea:focus {
 .post_form input[type="submit"] {
   border: none;
   border-radius: 3px;
-  background-color: #5d2be9;
+  background-color: var(--primary-color);
   color: #fff;
   padding: 10px;
   font-family: "Quicksand-Bold" sans-serif;
@@ -164,11 +171,20 @@ textarea:focus {
   cursor: pointer;
 }
 
+.posted_by a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
 /*Styles for larger screens*/
 @media (min-width: 950px) and (max-width: 5000px) {
   .wrapper {
     flex-direction: row;
     align-content: space-between;
+  }
+
+  .user_details {
+    height: 160px;
   }
   .main_column {
     width: 70%;

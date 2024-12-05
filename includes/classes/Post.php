@@ -45,6 +45,111 @@ public function submitPost($body, $user_to) {
   }
 }
 
+public function loadPostsFriends() {
+  $str = ""; // string to return
+  $data = mysqli_query($this->connection, "SELECT * FROM posts WHERE deleted='no' ORDER BY id DESC");
+
+  while($row = mysqli_fetch_array($data)) {
+$id = $row['id'];
+$body = $row['body'];
+$added_by = $row['added_by'];
+$date_time = $row['date_added'];
+
+// Prepare user_to string so it can be included eve if not posted to a user
+if($row['user_to'] == "none") {
+$user_to = "";
+} else {
+  $user_to_obj = new User($this->connection, $row['user_to']);
+  $user_to_name = $user_to_obj->getFirstAndLastName();
+  $user_to = " to <a href='" . $row['user_to'] . "'>" . $user_to_name . "</a>";
+}
+
+// Check if user who posted has their account closed and dont show their posts
+$added_by_obj = new User($this->connection, $added_by);
+
+if($added_by_obj->isClosed()) {
+  continue;
+}
+
+$user_details_query = mysqli_query($this->connection, "SELECT first_name, last_name, profile_pic FROM users WHERE username='$added_by'");
+$user_row = mysqli_fetch_array($user_details_query);
+$first_name = $user_row['first_name'];
+$last_name = $user_row['last_name'];
+$profile_pic = $user_row['profile_pic'];
+
+// Timeframe
+$date_time_now = date("Y-m-d H:i:s");
+$start_date = new DateTime($date_time); // time of post
+$end_date = new DateTime($date_time_now); // current time
+$interval = $start_date->diff($end_date); // Difference between dates
+
+if($interval->y >= 1) {
+  if($interval == 1) {
+    $time_message = "Vor " . $interval->y . " Jahr";
+  } else {
+    $time_message = "Vor " . $interval->y . " Jahren";
+  }
+} else if ($interval->m >= 1) {
+if($interval->d == 0) {
+  $days = "";
+} else if ($interval->d == 1) {
+  $days = " und" . $interval->d . " Tag";
+}  else {
+  $days = " und " . $interval->d . " Tagen";
+}
+
+if ($interval->m == 1) {
+  $time_message = "Vor " . $interval->m . " Monat" . $days;
+} else {
+  $time_message = "Vor " . $interval->m . " Monaten" . $days;
+} 
+} else if ($interval->d >= 1) {
+  if ($interval->d == 1) {
+    $time_message = "Gestern";
+  }  else {
+    $time_message = "Vor " . $interval->d . " Tagen";
+  }
+} else if ($interval->h >= 1) {
+if($interval->h ==1) {
+  $time_message = "Vor " . $interval->h . " Stunde";
+} else {
+  $time_message= "Vor " . $interval->h .  " Stunden";
+}
+} else if ($interval->i >= 1) {
+  if ($interval->i == 1) {
+    $time_message = "Vor " . $interval->i . " Minute";
+  } else {
+    $time_message = "Vor " . $interval->i . " Minuten";
+  }
+
+} else  {
+  if ($interval->i < 30) {
+    $time_message = "Gerade eben";
+  } else {
+    $time_message = "Vor " . $interval->i . " Sekunden";
+  }
+}
+
+$str .= "<div class='status_post'>
+          <div class='post_profile_pic'>
+          <img src='$profile_pic' width='50'>
+          </div>
+          <div class='posted_by' style='color:#ACACAC;'>
+          <a href='$added_by'>$first_name $last_name</a>$user_to &nbsp;&nbsp;&nbsp;&nbsp;$time_message
+          </div>
+          <div id='post_body'>
+          $body<br></div>
+          </div>";
+
+
+
+
+
+
+  }
+  echo $str;
+}
+
 }
 
 
