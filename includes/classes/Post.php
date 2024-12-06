@@ -89,94 +89,98 @@ if (mysqli_num_rows($data_query) > 0) {
     continue;
     }
 
+   $user_logged_obj = new User($this->connection, $userLoggedIn);
    
+        if ($user_logged_obj->isFriend($added_by)) {
 
-    if($num_iterations++ < $start) {
-continue;
-    }
+        
 
-     // once 10 posts have been loaded, break
-     if($count > $limit) {
-      break;
-     } else {
-      $count++;
-     }
+          if($num_iterations++ < $start) {
+      continue;
+          }
 
-    $user_details_query = mysqli_query($this->connection, "SELECT first_name, last_name, profile_pic FROM users WHERE username='$added_by'");
-    $user_row = mysqli_fetch_array($user_details_query);
-    $first_name = $user_row['first_name'];
-    $last_name = $user_row['last_name'];
-    $profile_pic = $user_row['profile_pic'];
+          // once 10 posts have been loaded, break
+          if($count > $limit) {
+            break;
+          } else {
+            $count++;
+          }
 
-    // Timeframe
-    $date_time_now = date("Y-m-d H:i:s");
-    $start_date = new DateTime($date_time); // time of post
-    $end_date = new DateTime($date_time_now); // current time
-    $interval = $start_date->diff($end_date); // Difference between dates
+          $user_details_query = mysqli_query($this->connection, "SELECT first_name, last_name, profile_pic FROM users WHERE username='$added_by'");
+          $user_row = mysqli_fetch_array($user_details_query);
+          $first_name = $user_row['first_name'];
+          $last_name = $user_row['last_name'];
+          $profile_pic = $user_row['profile_pic'];
 
-    if($interval->y >= 1) {
-    if($interval == 1) {
-      $time_message = "Vor " . $interval->y . " Jahr";
-    } else {
-      $time_message = "Vor " . $interval->y . " Jahren";
-    }
-    } else if ($interval->m >= 1) {
-    if($interval->d == 0) {
-    $days = "";
-    } else if ($interval->d == 1) {
-    $days = " und" . $interval->d . " Tag";
-    }  else {
-    $days = " und " . $interval->d . " Tagen";
-    }
+          // Timeframe
+          $date_time_now = date("Y-m-d H:i:s");
+          $start_date = new DateTime($date_time); // time of post
+          $end_date = new DateTime($date_time_now); // current time
+          $interval = $start_date->diff($end_date); // Difference between dates
 
-    if ($interval->m == 1) {
-    $time_message = "Vor " . $interval->m . " Monat" . $days;
-    } else {
-    $time_message = "Vor " . $interval->m . " Monaten" . $days;
-    } 
-    } else if ($interval->d >= 1) {
-    if ($interval->d == 1) {
-      $time_message = "Gestern";
-    }  else {
-      $time_message = "Vor " . $interval->d . " Tagen";
-    }
-    } else if ($interval->h >= 1) {
-    if($interval->h ==1) {
-    $time_message = "Vor " . $interval->h . " Stunde";
-    } else {
-    $time_message= "Vor " . $interval->h .  " Stunden";
-    }
-    } else if ($interval->i >= 1) {
-    if ($interval->i == 1) {
-      $time_message = "Vor " . $interval->i . " Minute";
-    } else {
-      $time_message = "Vor " . $interval->i . " Minuten";
-    }
+          if($interval->y >= 1) {
+          if($interval == 1) {
+            $time_message = "Vor " . $interval->y . " Jahr";
+          } else {
+            $time_message = "Vor " . $interval->y . " Jahren";
+          }
+          } else if ($interval->m >= 1) {
+          if($interval->d == 0) {
+          $days = "";
+          } else if ($interval->d == 1) {
+          $days = " und" . $interval->d . " Tag";
+          }  else {
+          $days = " und " . $interval->d . " Tagen";
+          }
 
-    } else  {
-    if ($interval->i < 30) {
-      $time_message = "Gerade eben";
-    } else {
-      $time_message = "Vor " . $interval->i . " Sekunden";
-    }
-    }
+          if ($interval->m == 1) {
+          $time_message = "Vor " . $interval->m . " Monat" . $days;
+          } else {
+          $time_message = "Vor " . $interval->m . " Monaten" . $days;
+          } 
+          } else if ($interval->d >= 1) {
+          if ($interval->d == 1) {
+            $time_message = "Gestern";
+          }  else {
+            $time_message = "Vor " . $interval->d . " Tagen";
+          }
+          } else if ($interval->h >= 1) {
+          if($interval->h ==1) {
+          $time_message = "Vor " . $interval->h . " Stunde";
+          } else {
+          $time_message= "Vor " . $interval->h .  " Stunden";
+          }
+          } else if ($interval->i >= 1) {
+          if ($interval->i == 1) {
+            $time_message = "Vor " . $interval->i . " Minute";
+          } else {
+            $time_message = "Vor " . $interval->i . " Minuten";
+          }
 
-    $str .= "<div class='status_post'>
-            <div class='post_profile_pic'>
-            <img src='$profile_pic' width='50'>
-            </div>
-            <div class='post_container'>
-            <div class='posted_by' style='color:#ACACAC;'>
-            <a href='$added_by'>$first_name $last_name</a>$user_to
-            </div>
-            <div style='color:#ACACAC;'>$time_message</div>
-            <div id='post_body'>
-            $body<br></div>
-            </div>
-            </div><hr>";
+          } else  {
+          if ($interval->i < 30) {
+            $time_message = "Gerade eben";
+          } else {
+            $time_message = "Vor " . $interval->i . " Sekunden";
+          }
+          }
+
+          $str .= "<div class='status_post'>
+                  <div class='post_profile_pic'>
+                  <img src='$profile_pic' width='50'>
+                  </div>
+                  <div class='post_container'>
+                  <div class='posted_by' style='color:#ACACAC;'>
+                  <a href='$added_by'>$first_name $last_name</a>$user_to
+                  </div>
+                  <div style='color:#ACACAC;'>$time_message</div>
+                  <div id='post_body'>
+                  $body<br></div>
+                  </div>
+                  </div><hr>";
 
 
-
+                }
 
 
 
