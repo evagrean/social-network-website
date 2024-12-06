@@ -29,7 +29,7 @@
 * {
   margin: 0;
   padding: 0;
-  /* border: 1px solid magenta; only dev helper */
+ /* border: 1px solid magenta; /*only dev helper */
 }
 
 body {
@@ -46,7 +46,8 @@ body {
   display: inline-flex;
   font-family: "Quicksand-Bold", sans-serif;
   position: fixed;
-  z-incex: 10;
+  z-index: 10;
+  position: fixed;
 }
 
 .logo a {
@@ -99,7 +100,7 @@ nav a:hover {
   border: 1px solid #d3d3d3;
   border-radius: 7px;
   box-shadow: 1px 1px 1px #d3d3d3;
-  /*z-index: -1;*/
+  z-index: 2;
 }
 
 .user_details {
@@ -128,7 +129,7 @@ nav a:hover {
 .main_column {
   float: right;
   width: 270px;
-  /*z-index: -1*/
+z-index: 2;
   min-height: 160px;
 }
 
@@ -176,6 +177,39 @@ textarea:focus {
   color: var(--primary-color);
 }
 
+.post_list {
+  margin-top: 70px;
+ 
+}
+
+.status_post {
+/* display: flex;
+flex-direction: row;
+align-content: flex-start; */
+  width: 96%;
+  font-size: 15px;
+  padding: 0 5px;
+  min-height: 75px;
+}
+
+.post_profile_pic {
+  float: left;
+  margin-right: 70x;
+
+}
+
+.post_profile_pic img {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.post_container {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
 /*Styles for larger screens*/
 @media (min-width: 950px) and (max-width: 5000px) {
   .wrapper {
@@ -199,4 +233,8 @@ textarea:focus {
     margin: 0;
     font-size: 100%;
   }
+
+
+
+ 
 }
