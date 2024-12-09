@@ -112,6 +112,34 @@ if (mysqli_num_rows($data_query) > 0) {
           $last_name = $user_row['last_name'];
           $profile_pic = $user_row['profile_pic'];
 
+          ?>
+<script>
+function toggle<?php echo $id;?>() {
+
+  let target = $(event.target);
+
+  if (!target.is("a")) {
+    let element = document.getElementById("toggleComment<?php echo $id;?>");
+
+    if (element.style.display === "block") {
+      element.style.display = "none";
+    } else {
+      element.style.display = "block";
+    }
+  }
+
+
+}
+</script>
+
+<?php
+
+$comments_check = mysqli_query($this->connection, "SELECT * FROM comments WHERE post_id='id'");
+$comments_check_num = mysqli_num_rows($comments_check);
+
+
+
+
           // Timeframe
           $date_time_now = date("Y-m-d H:i:s");
           $start_date = new DateTime($date_time); // time of post
@@ -165,7 +193,7 @@ if (mysqli_num_rows($data_query) > 0) {
           }
           }
 
-          $str .= "<div class='status_post'>
+          $str .= "<div class='status_post' onClick='javascript:toggle$id()'>
                   <div class='post_profile_pic'>
                   <img src='$profile_pic' width='50'>
                   </div>
@@ -176,8 +204,19 @@ if (mysqli_num_rows($data_query) > 0) {
                   <div style='color:#ACACAC;'>$time_message</div>
                   <div id='post_body'>
                   $body<br></div>
+                  
                   </div>
-                  </div><hr>";
+                  </div>
+                  <br>         
+                
+                  <div class='newsfeed_post_options'>
+                  Comments($comments_check_num)&nbsp;&nbsp;&nbsp;
+                  <iframe src='like.php?post_id=$id' scrolling='no'></iframe>
+                  </div>
+                  <div class='post_comment' id='toggleComment$id' style='display: none;'>
+                  <iframe src='comment_frame.php?post_id=$id' id='comment_iframe' frameboarder=0></iframe>
+                  </div>
+                  <hr>";
 
 
                 }
