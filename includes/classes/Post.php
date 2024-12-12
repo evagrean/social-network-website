@@ -71,6 +71,9 @@ if (mysqli_num_rows($data_query) > 0) {
     $id = $row['id'];
     $body = $row['body'];
     $added_by = $row['added_by'];
+
+    //if($row['added_by'] == null) exit("Added by is null");
+
     $date_time = $row['date_added'];
 
     // Prepare user_to string so it can be included eve if not posted to a user
@@ -134,7 +137,7 @@ function toggle<?php echo $id;?>() {
 
 <?php
 
-$comments_check = mysqli_query($this->connection, "SELECT * FROM comments WHERE post_id='id'");
+$comments_check = mysqli_query($this->connection, "SELECT * FROM comments WHERE post_id='$id'");
 $comments_check_num = mysqli_num_rows($comments_check);
 
 

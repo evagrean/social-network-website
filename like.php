@@ -15,6 +15,20 @@
     font-size: 12px;
     font-family: Arial, Helveticca, Sans-serif;
   }
+
+  body {
+    background-color: #fff;
+
+  }
+
+  form {
+    position: absolute;
+    top: 0;
+  }
+
+  /* .comment_like:hover {
+    cursor: pointer;
+  } */
   </style>
 
   <?php 
