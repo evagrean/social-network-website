@@ -113,6 +113,32 @@ $query = mysqli_query($this->connection, "INSERT INTO friend_requests VALUES(nul
 
 }
 
+public function getMutualFriends($user_to_check) {
+$mutualFriends = 0;
+$user_array = $this->user['friend_array'];
+// Friend array for the user logged in
+$user_array_explode = explode(",", $user_array); // explode splits string into array at given delimiter
+
+// Friend array for the user to check
+$query = mysqli_query($this->connection, "SELECT friend_array from users WHERE username='$user_to_check'");
+$row = mysqli_fetch_array($query);
+$user_to_check_array = $row['friend_array'];
+$user_to_check_array_explode = explode(",", $user_to_check_array);
+
+foreach($user_array_explode as $i) {
+
+  foreach($user_to_check_array_explode as $j) {
+
+    if($i == $j && $i != "") {
+      $mutualFriends++;
+    }
+
+  }
+}
+return $mutualFriends;
+
+}
+
   
 }
 

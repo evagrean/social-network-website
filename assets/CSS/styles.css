@@ -121,6 +121,10 @@ nav a:hover {
   margin-bottom: 20px;
 }
 
+.user_details a {
+  text-decoration: none;
+}
+
 .user_details_left_right {
   width: 125px;
   display: inline-block;
@@ -398,6 +402,122 @@ border: none;
   color: var(--font-color-light);
 }
 
+.delete_button {
+  height: 22px;
+  width: 22px;
+  float: right;
+  border: none;
+  background-color: transparent;
+  position: relative;
+  right: -15px;
+  color: var(--color-danger);  
+}
+
+.delete_button:hover {
+
+}
+
+.profile_info_bottom {
+  margin: 15px 0 10px 7px;
+
+
+}
+
+#main_column h4  {
+  font-size: 100%;
+  font-family: "Quicksand-Bold" sans-serif;
+}
+
+#main_column h4 a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+#message_textarea {
+  width: 80%;
+  margin-right: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color-boxes);
+  font-size: 12px;
+  height: 50px;
+}
+
+#message_submit {
+  height: 50px;
+  width: 120px;
+  margin 0;
+ 
+  border: none;
+  color: var(--font-color-light);
+  background: var(--primary-color);
+  border-radius: 5px;
+  font-family: "Quicksand-Bold" sans-serif;
+}
+
+#message_submit:hover{
+  background-color: var(--primary-color-darker);
+}
+
+.message {
+
+  border-radius: 5px;
+  padding: 8px 10px;
+  display: inline-block;
+  color: var(--font-color-light);
+  clear: both;
+}
+
+.message#dark {
+  background-color: var(--primary-color-darker);
+  float: right;
+  margin-bottom: 5px;}
+
+.message#light {
+  background-color: var(--primary-color-lighter);
+  margin-bottom: 5px;
+  float: left;
+}
+
+.loaded_messages {
+  height: 65%;
+  min-height: 300px;
+  max-height: 400px;
+  overflow: scroll;
+  margin-bottom: 10px;
+}
+
+.loaded_conversations {
+  max-heigt: 216px;
+  overflow: scroll;
+}
+
+.loaded_conversations a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.user_found_messages {
+  border-bottom: 1px solid lightgray;
+  padding: 8px 8px 10px 8px;
+}
+
+.user_found_messages:hover {
+  background-color: var(--background-color-light);
+}
+
+.user_found_messages img {
+  height: 33px;
+  float: left;
+}
+
+#grey {
+  color: var(--font-color-comment);
+}
+
+
+
+ 
+
 
 
 
@@ -411,6 +531,11 @@ border: none;
   .user_details {
     height: 160px;
   }
+
+  .column {
+    float: left;
+  }
+
   .main_column {
     width: 70%;
     margin-left: 20px;

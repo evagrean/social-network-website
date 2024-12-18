@@ -85,10 +85,25 @@ header("Location: requests.php");
   <input type="submit" class="post_modal_btn" data-bs-toggle="modal" data-bs-target="#post_modal"
     value="Post Something">
 
+  <?php 
+    
+    if($userLoggedIn != $username) {
+      echo '<div class="profile_info_bottom">';
+      echo $logged_in_user_obj->getMutualFriends($username) . " Mutual friends";
+      echo '</div>';
+    }
+    
+    ?>
+
 </div>
 
 <div class="main_column column">
-  <?php echo $username?>
+  <div class="post_list">
+
+    <div class="posts_area"></div>
+
+  </div>
+  <img id="loading" src="assets/images/icons/loading_spinner.webp" alt="loading spinner" style="width: 10%;">
 
 
 </div>
@@ -128,6 +143,71 @@ header("Location: requests.php");
     </div>
   </div>
 </div>
+
+<script>
+$(function() {
+
+  var userLoggedIn = '<?php echo $userLoggedIn; ?>';
+  // That is who's profile we are on
+  var profileUsername = '<?php echo $username; ?>';
+  var inProgress = false;
+
+  loadPosts(); //Load first posts
+
+  $(window).scroll(function() {
+    var bottomElement = $(".status_post").last();
+    var noMorePosts = $('.posts_area').find('.noMorePosts').val();
+
+    // isElementInViewport uses getBoundingClientRect(), which requires the HTML DOM object, not the jQuery object. The jQuery equivalent is using [0] as shown below.
+    if (isElementInView(bottomElement[0]) && noMorePosts == 'false') {
+      loadPosts();
+    }
+  });
+
+  function loadPosts() {
+    if (inProgress) { //If it is already in the process of loading some posts, just return
+      return;
+    }
+
+    inProgress = true;
+    $('#loading').show();
+
+    var page = $('.posts_area').find('.nextPage').val() ||
+      1; //If .nextPage couldn't be found, it must not be on the page yet (it must be the first time loading posts), so use the value '1'
+
+    $.ajax({
+      url: "includes/handlers/ajax_load_profile_posts.php",
+      type: "POST",
+      data: "page=" + page + "&userLoggedIn=" + userLoggedIn + "&profileUsername=" + profileUsername,
+      cache: false,
+
+      success: function(response) {
+        $('.posts_area').find('.nextPage').remove(); //Removes current .nextpage 
+        $('.posts_area').find('.noMorePosts').remove(); //Removes current .nextpage 
+        $('.posts_area').find('.noMorePostsText').remove(); //Removes current .nextpage 
+
+        $('#loading').hide();
+        $(".posts_area").append(response);
+
+        inProgress = false;
+      }
+    });
+  }
+
+  //Check if the element is in view
+  function isElementInView(el) {
+    var rect = el.getBoundingClientRect();
+
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && //* or $(window).height()
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth) //* or $(window).width()
+    );
+  }
+});
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
