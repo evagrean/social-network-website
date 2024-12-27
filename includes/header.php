@@ -81,7 +81,8 @@ if(isset($_SESSION['username'])) {
         ?>
 
       </a>
-      <a href="#"><i class="material-icons">notifications</i>
+      <a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'notification' )">
+        <i class="material-icons">notifications</i>
         <?php 
        if ($num_notifications > 0) {
         echo ' <span class="notification_badge" id="unread_notification">' . $num_notifications . '</span>'; 
