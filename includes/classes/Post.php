@@ -39,7 +39,7 @@ public function submitPost($body, $user_to) {
 
     if ($user_to != 'none') {
       $notification = new Notification($this->connection, $added_by);
-      $notification->insertNotification($returned_id, $user_to, "profile_ost");
+      $notification->insertNotification($returned_id, $user_to, "profile_post");
     }
  
  // Update post count for user
