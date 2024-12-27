@@ -35,7 +35,12 @@ public function submitPost($body, $user_to) {
     $query = mysqli_query($this->connection, "INSERT INTO posts VALUES(null, '$body', '$added_by', '$user_to', '$date_added', 'no', 'no', '0' )");
     $returned_id = mysqli_insert_id($this->connection);
 
- // Insert notification
+    // Insert notification
+
+    if ($user_to != 'none') {
+      $notification = new Notification($this->connection, $added_by);
+      $notification->insertNotification($returned_id, $user_to, "profile_ost");
+    }
  
  // Update post count for user
  $num_posts = $this->user_obj->getNumPosts();

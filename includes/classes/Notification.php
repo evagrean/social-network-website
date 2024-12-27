@@ -29,7 +29,7 @@ public function insertNotification($post_id, $user_to, $type) {
     case 'like':
       $message = $userLoggedInName . " liked your post";
       break;
-    case 'profile':
+    case 'profile_post':
        $message = $userLoggedInName . " posted on your profile";
        break;
     case 'comment_non_owner':
