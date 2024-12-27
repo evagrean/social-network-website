@@ -3,6 +3,7 @@
   --primary-color: #5d2be9;
   --primary-color-darker: #5326d1;
   --primary-color-lighter: #b07be0;
+  --primary-color-lightest: #efe4f8;
   --font-color-comment: #616060;
   --border-color-boxes: #d3d3d3;
   --font-color-light: #fff;
@@ -487,13 +488,24 @@ border: none;
 }
 
 .loaded_conversations {
-  max-heigt: 216px;
+  max-height: 216px;
   overflow: scroll;
 }
 
 .loaded_conversations a {
   text-decoration: none;
   color: var(--primary-color);
+}
+
+#search_text_input {
+margin-bottom: 20px;
+padding: 2px;
+border: 1px solid var(--border-color-boxes);
+
+}
+
+#search_text_input:focus {
+  border: 1px solid var(--primary-color);
 }
 
 .user_found_messages {
@@ -512,6 +524,86 @@ border: none;
 
 #grey {
   color: var(--font-color-comment);
+}
+
+.resultDisplay {
+  padding: 5px 5px 0 5px;
+  height: 60px;
+  border-bottom: 1px solid var(--border-color-boxes);
+}
+
+.resultDisplay a {
+  float: none;
+  text-decoration: none;
+}
+
+.resultDisplay:hover {
+  background-color: var(--background-color-light);
+}
+
+.liveSearchProfilePic img {
+  height: 50px;
+  border-radius: 25px;
+  margin: 1px 12px 0 2px;
+  float: left;
+
+}
+
+.liveSearchText {
+
+  background-color: transparent;
+  color: var(--primary-color-darker);
+}
+
+.liveSearchText p {
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.tab-content {
+  margin-top: 25px;
+}
+
+.nav-link {
+  color: var(--primary-color-darker)
+}
+
+#messages_div a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.dropdown_data_window {
+  /* height: 280px;
+  padding: 0px; */
+  background-color: #fff;
+  border: 1px solid var(--border-color-boxes);
+  width: 300px;
+  border-radius: 0 0  8px 8px;
+  position: absolute;
+  right: 10px;
+  top: 44px; 
+  overflow: scroll;
+}
+
+.dropdown_data_window a {
+  text-decoration: none;
+  color: var(--primary-color-darker);
+}
+
+.notification_badge {
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: var(--color-danger);
+  border-radius: 10px;
+  position: absolute;
+  left: 15px;
+  top: -2;
 }
 
 

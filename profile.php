@@ -1,7 +1,12 @@
 <?php 
 include('includes/header.php');
-include('includes/classes/User.php');
-include('includes/classes/Post.php');
+// include('includes/classes/User.php');
+// include('includes/classes/Post.php');
+// include('includes/classes/Message.php');
+
+$message_obj = new Message($connection, $userLoggedIn);
+
+
 
 
 if(isset($_GET['profile_username'])) {
@@ -28,7 +33,26 @@ if (isset($_POST['add_friend'])) {
 
 if (isset($_POST['respond_request'])) {
 header("Location: requests.php");
-          }
+}
+
+if (isset($_POST['post_message'])) {
+  if (isset($_POST['message_body'])) {
+    $body = mysqli_real_escape_string($connection, $_POST['message_body']);
+    $date = date("Y-m-d H:i:s");
+    $message_obj->sendMessage($username, $body, $date);
+
+  }
+
+  $link = '#profileTabs a[href="#messages_div"]';
+
+  echo "<script>
+          $(function() {
+            $('" . $link . "').tab('show');
+          
+          }) 
+  
+        </script>";
+}
 
 
 ?>
@@ -98,20 +122,78 @@ header("Location: requests.php");
 </div>
 
 <div class="main_column column">
-  <div class="post_list">
 
-    <div class="posts_area"></div>
+  <ul class="nav nav-tabs" role="tablist" id="profileTabs">
+    <li role="presentation" class="nav-item">
+      <a class="nav-link active" aria-current="newsfeed_div" href="#newsfeed_div" aria-controls="newsfeed_div"
+        role="tab" data-bs-toggle="tab" data-bs-target="#newsfeed_div">Newsfeed</a>
+    </li>
+    <!-- <li role="presentation" class="nav-item">
+      <a class="nav-link" href="#about_div" aria-controls="about_div" role="tab" data-bs-toggle="tab">About</a>
+    </li> -->
+    <li role="presentation" class="nav-item">
+      <a class="nav-link" href="#messages_div" aria-current="messages_div" aria-controls="messages_div" role="tab"
+        data-bs-toggle="tab" data-bs-target="#messages_div">Messages</a>
+    </li>
 
+  </ul>
+
+  <div class="tab-content">
+
+    <div role="tabpanel" class="tab-pane fade in active" id="newsfeed_div">
+
+      <div class="posts_area"></div>
+      <img id="loading" src="assets/images/icons/loading_spinner.webp" alt="loading spinner" style="width: 10%;">
+    </div>
+
+    <!-- <div role="tabpanel" class="tab-pane fade" id="about_div">
+
+    </div> -->
+
+    <div role="tabpanel" class="tab-pane fade" id="messages_div">
+
+      <?php 
+
+      $message_obj = new Message($connection, $userLoggedIn);
+
+    echo "<h4>You and <a href='" .  $username . "'>" . $profile_user_obj->getFirstAndLastName() . "</a></h4><hr><br>";
+
+    echo "<div class='loaded_messages' id='scroll_messages'>";
+    echo $message_obj->getMessages($username);
+    echo "</div>";
+  
+  ?>
+
+
+      <div class="message_post">
+        <form action="" method="POST">
+
+          <textarea name='message_body' id='message_textarea' placeholder='Write your message here ...'></textarea>
+          <input type='submit' name='post_message' id='message_submit' value='Send'>
+
+        </form>
+      </div>
+
+      <script>
+      $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function() {
+        var div = document.getElementById("scroll_messages");
+        div.scrollTop = div.scrollHeight;
+      })
+
+      // VERSION FROM MESSAGES PAGE:
+      // makes that when message is sent or page reloaded, it scrolls to most recent message
+      // var div = document.getElementById("scroll_messages");
+      // if (div != null) {
+      //   div.scrollTop = div.scrollHeight;
+      // }
+      </script>
+
+    </div>
   </div>
-  <img id="loading" src="assets/images/icons/loading_spinner.webp" alt="loading spinner" style="width: 10%;">
+
 
 
 </div>
-
-
-
-
-
 
 </div>
 <!-- Modal -->

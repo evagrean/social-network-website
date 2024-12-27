@@ -1,7 +1,7 @@
 <?php 
 include('includes/header.php');
-include('includes/classes/User.php');
-include('includes/classes/Post.php');
+// include('includes/classes/User.php');
+// include('includes/classes/Post.php');
 
 
 if(isset($_POST['post'])) {
@@ -52,6 +52,7 @@ $(function() {
   var inProgress = false;
 
   loadPosts(); //Load first posts
+
 
   $(window).scroll(function() {
     var bottomElement = $(".status_post").last();

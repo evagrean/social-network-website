@@ -1,7 +1,8 @@
 <?php 
 include("includes/header.php");
-include("includes/classes/Message.php");
-include("includes/classes/User.php");
+// include("includes/classes/Message.php");
+// include("includes/classes/User.php");
+
 
 $message_obj = new Message($connection, $userLoggedIn);
 
@@ -63,11 +64,14 @@ if(isset($_POST['message_body'])) {
       <?php 
       if($user_to == "new") {
         echo "Select the friend you would like to message <br><br>";
-        echo "To: <input type='text'>";
-        echo "<div class='results'></div>";
+        ?>
+      To: <input type='text' onkeyup='getUsers(this.value, "<?php echo $userLoggedIn; ?>")' name='q' placeholder='Name'
+        autocomplete='off' id='search_text_input'>
+      <?php
+      echo "<div class='results'></div>";
       } else {
-        echo "<textarea name='message_body' id='message_textarea' placeholder='Write your message here ...'></textarea>";
-        echo "<input type='submit' name='post_message' id='message_submit' value='Send'>";
+      echo "<textarea name='message_body' id='message_textarea' placeholder='Write your message here ...'></textarea>";
+      echo "<input type='submit' name='post_message' id='message_submit' value='Send'>";
       }
       ?>
     </form>
@@ -76,7 +80,11 @@ if(isset($_POST['message_body'])) {
   <script>
   // makes that when message is sent or page reloaded, it scrolls to most recent message
   var div = document.getElementById("scroll_messages");
-  div.scrollTop = div.scrollHeight;
+
+
+  if (div != null) {
+    div.scrollTop = div.scrollHeight;
+  }
   </script>
 
 
@@ -84,7 +92,7 @@ if(isset($_POST['message_body'])) {
 <div class="user_details column" id="conversations">
   <h4>Conversations</h4>
   <div class="loaded_conversations">
-    <?php echo $message_obj->getConversations()?>;
+    <?php echo $message_obj->getConversations()?>
   </div>
   <br>
   <a href="messages.php?user=new">New Message</a>
