@@ -607,6 +607,24 @@ border: 1px solid var(--border-color-boxes);
 }
 
 
+.resultDisplayNotification {
+  height: auto;
+  color: var(--primary-color-darker);
+  padding-bottom: 8px;
+}
+
+.resultDisplayNotification img {
+  height: 40px;
+  border-radius: 5px;
+  margin: 1px 12px 0 2px;
+  float: left;
+}
+
+.timestamp_smaller {
+  font-size: 85%;
+  margin: 0;
+}
+
 
  
 
