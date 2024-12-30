@@ -679,6 +679,42 @@ border: 1px solid var(--border-color-boxes);
   text-decoration: none;
 }
 
+.searchPageFriendButton {
+  margin: 30px 0 30px 0;
+  float: right;
+}
+
+.result_profile_pic {
+  float: left;
+  margin-right: 10px;
+}
+
+#search_hr {
+  margin-bottom: 0; 
+}
+
+.searchPageFriendButton input[type="submit"] {
+ padding: 8px;
+  border: none;
+  border-radius: 5px;
+  color: var(--font-color-light);
+}
+
+.searchPageFriendButton input:hover {
+cursor: pointer;
+
+ }
+
+ .search_result {
+  padding: 10px;
+  height: 100px;
+ }
+
+.search_result a {
+  text-decoration: none;
+  color: var(--primary-color)
+}
+
 
  
 
