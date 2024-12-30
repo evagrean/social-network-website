@@ -89,6 +89,7 @@ public function getNotifications($data, $limit) {
 
     $user_data_query = mysqli_query($this->connection, "SELECT * FROM users WHERE username='$user_from'");
     $user_data = mysqli_fetch_array($user_data_query);
+    echo $user_data;
 
      // Timeframe
      $date_time_now = date("Y-m-d H:i:s");
@@ -151,7 +152,7 @@ public function getNotifications($data, $limit) {
                         <div class='notificationsProfilePic'>
                           <img src='" . $user_data['profile_pic'] . "'>                         
                         </div>
-                        <p class='timestamp_smaller' id='grey'>" . $time_message . "</p>" . $row['message'] .  " 
+                        <p class='timestamp_smaller' id='grey'>" . $time_message   . "</p>" . $row['message'] .  " 
                         </div>                                    
                       </a>";
   }

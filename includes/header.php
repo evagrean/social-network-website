@@ -57,6 +57,29 @@ if(isset($_SESSION['username'])) {
       <a href="index.php">BrickBuddies</a>
     </div>
 
+    <div class="search">
+
+      <form action="search.php" method="GET" name="search_form">
+        <input type="text" onkeyup="getLieveSearchUsers(this.value), '<?php echo $userLoggedIn ?>')" name="q"
+          placeholder="Search..." autocomplete="off" id="search_text_input">
+
+        <div class="button_holder">
+          <img src="assets/images/icons/magnifying_glass.png" alt="magnifying glass">
+        </div>
+      </form>
+
+      <div class="search_results">
+
+      </div>
+
+      <div class="search_results_footer_empty">
+
+      </div>
+
+
+
+    </div>
+
     <nav>
 
       <?php 
