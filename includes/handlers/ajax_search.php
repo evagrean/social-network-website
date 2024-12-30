@@ -10,6 +10,7 @@ $userLoggedIn = $_POST['userLoggedIn'];
 // explode makes it possible to search first and last name
 $names = explode(" ", $query);
 
+
 // If query contains an unsercore, assume user is searching for usernames
 if (strpos($query, '_') !== false) {
   $usersReturnedQuery = mysqli_query($connection, "SELECT * FROM users WHERE username LIKE '$query%' AND user_closed='no' LIMIT 8");
@@ -19,7 +20,7 @@ if (strpos($query, '_') !== false) {
   $usersReturnedQuery = mysqli_query($connection, "SELECT * FROM users WHERE (first_name LIKE '$names[0]%' AND last_name LIKE '$names[1]%') AND user_closed='no' LIMIT 8");
 // If query has one word search first names and last names
 } else {
-  $usersReturnedQuery = mysqli_query($connection, "SELECT * FROM users WHERE (first_name LIKE '$names[0]%' AND last_name LIKE '$names[0]%') AND user_closed='no' LIMIT 8");
+  $usersReturnedQuery = mysqli_query($connection, "SELECT * FROM users WHERE (first_name LIKE '$names[0]%' OR last_name LIKE '$names[0]%') AND user_closed='no' LIMIT 8");
 }
 
 if ($query != "") {
@@ -45,6 +46,8 @@ if ($query != "") {
                 </div>
               </a>
             </div>";
+
+  
 
   }
 }
