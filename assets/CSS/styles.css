@@ -364,6 +364,11 @@ border-bottom: 5px solid var(--primary-color-lighter);
   color: var(--font-color-dark);
 }
 
+.info {
+  background-color: var(--primary-color);
+  color: var(--font-color-light);
+}
+
 .profile_left input[type="submit"] {
   width: 60%;
   height: 30px;
@@ -713,6 +718,31 @@ cursor: pointer;
 .search_result a {
   text-decoration: none;
   color: var(--primary-color)
+}
+
+#small_profile_pic {
+  height: 55px;
+  margin: 1px 12px 12px 2px;
+  float: left;
+}
+
+.settings_input {
+  border: 1px solid var(--border-color-boxes);
+  height: 20px;
+  padding: 4px 6px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  width: 201px;
+}
+
+.settings_submit {
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  margin: 10px 0 10px 0;
+  color: var(--font-color-light);
 }
 
 
