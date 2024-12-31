@@ -125,7 +125,7 @@ if(isset($_SESSION['username'])) {
        
         ?>
       </a>
-      <a href="#"><i class="material-icons">settings</i></a>
+      <a href="settings.php"><i class="material-icons">settings</i></a>
       <a href="includes/handlers/logout.php"><i class="material-icons">logout</i></a>
     </nav>
 
